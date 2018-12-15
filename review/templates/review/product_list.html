@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}제품 목록{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "review/review.css" %}{% endblock %}
+
+{% block content %}
+<div id="content">
+    {% for product in object_list %} <!--AlbumLV 뷰가 앨범 목록을 object_list로 전달-->
+        <br/>
+        <div class="clear_float"> <!--photo.css에서 정의한 클래스, 지정된 float 속성을 해제-->
+            <h2 style="display:inline">
+                <a href="{% url 'review:product_detail' product.id %}">{{ product.name }}</a>
+            </h2>
+            &emsp;<b><i>{{ product.description }}</i></b>
+        </div>
+        <hr/>
+        <div class="product-list" style="height: 250px;">
+            {% for review in product.review_set.all|slice:":5" %}
+                <div class="product-list-review" style="width:150px; height:160px;float: left; margin:10px;">
+                    <a href="{{ review.get_absolute_url }}">
+                        <img class="thumbnail" src="{{ review.image.thumb_url }}" style="width:160px; height:150px;"  />
+                    </a>
+                    <h3 style="text-align:center;">{{ review.title }}</h3>
+                </div>
+
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}앨범{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "review/review.css" %}{% endblock %}
+
+{% block content %}
+<div id="content">
+    <h2 style="display:inline">{{ object.name }}</h2>
+    &nbsp;&nbsp; <b><i>{{ object.description }}</i></b>
+    <hr/>
+    <div class="product-detail">
+        {% for review in object.review_set.all %}
+        <div class="product-detail-review">
+            <a href="{{ review.get_absolute_url }}">
+                <img class="thumbnail" src="{{ review.image.thumb_url }}" />
+            </a>
+            <li>{{ review.title }}</li>
+            <li>{{ review.upload_date }}</li>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

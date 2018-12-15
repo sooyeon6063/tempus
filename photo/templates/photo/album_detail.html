@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}앨범{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "photo/photo.css" %}{% endblock %}
+
+{% block content %}
+<div id="content" style="text-align:center;">
+    <h1 style="display:inline">{{ object.name }}</h1><br/><br/>
+    &nbsp;&nbsp; <p style="color:darkgray"><b><i>{{ object.description }}</i></b></p>
+    <hr/>
+    <div class="album-detail" style="height:400px; text-align:center;">
+        {% for photo in object.photo_set.all %}
+        <div class="album-detail-photo" style="width:150px; height:160px;float: left; margin:10px;">
+            <a href="{{ photo.get_absolute_url }}">
+                <img class="thumbnail" src="{{ photo.image.thumb_url }}" style="width:150px; height:160px;" />
+            </a>
+            <h3 style="text-align:center;">{{ photo.title }}</h3>
+            <p style="text-align:center;">{{ photo.price }}</p>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

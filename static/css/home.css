@@ -1,0 +1,65 @@
+div#content_home {
+    position: relative;
+     width: 100%;
+    text-align: center;
+    top: 110px;
+    height:1550px; /*푸터가 너무 안내려가서 이거저거해보다가 여기 height를 지정하면 내려가네..맞는방법은 아닌데 일단은 이렇게 해두겠음*/
+    /*left: 110px;*/
+    /*right: 110px;*/
+}
+
+.cycle-slideshow {
+    text-align:center; /*cycle-pager를 가운데정렬하기 위함(은빈)*/
+    width: 1000px;
+    min-width: 100px;
+    max-width: 1000px;  /*이거 왜 설정해놓은거야? 이미지는 400인데 부모가 300이라서 가운데정렬이 제대로 안됨 이거 늘린다*/
+    margin: 10px auto;
+    padding: 0;
+    position: relative;
+}
+.cycle-slideshow img{
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;  /*이미지 가운데 정렬*/
+}
+.cycle-pager {
+    display:inline-block;
+    /*width: 100px;*/
+    z-index: 500;
+    position: absolute;
+    top: 2px;
+    overflow: hidden;
+}
+div#home_text{
+    text-align: center;
+
+}
+div#products{
+    /*position:absolute;*/
+    width: 100%;
+    height: 700px;
+    text-align: center;  /*이미지 가운데 정렬*/
+    /*left: 300px;*/
+}
+.product{
+    display: inline-block;
+}
+.product img{
+    width: 180px;
+    height:200px;
+}
+table#brandInfo{
+    border: solid black 1px;
+    margin:auto;
+}
+div#brandInfo p{
+    text-align:center;
+}
+/*푸터 하단고정 need*/
+div#footer{
+    /*position: absolute;*/
+}
+
+
+
+

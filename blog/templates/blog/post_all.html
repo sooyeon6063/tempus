@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!--글씨체(Roboto Slab)사용을 위한 임포트-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    {% load staticfiles %}<!--정적 파일인 css 연결하기 위하여, staticfiles를 로드-->
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/blog.css" %}{% endblock %}" />
+    <meta charset="UTF-8">
+
+    <title>Tempus Candle - BRAND</title>
+    <style>
+        #tbl {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 60%;
+            margin: auto;
+        }
+
+        #tbl td, #tbl th {
+            border: 1px solid white;
+            padding: 8px;
+        }
+
+        #tbl tr:nth-child(even){background-color: white;}
+
+        #tbl tr:hover {background-color: #ddd;}
+
+        #tbl th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: white;
+            color: red;
+        }
+
+        .centered {
+            text-align: center;
+        }
+        /* HEADER */
+div#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 150px;
+    width: 100%;
+    background: white;
+}
+
+h4#welcome {
+    display: block;
+    vertical-align: top;
+    text-align:right;
+    padding-top: 10px;
+    color: #000000;
+    font-weight: normal;
+    font-size: 12px;
+}
+
+div#welcome a:hover{
+    color: gray;
+}
+
+div#img_container{
+    width:100%;
+}
+
+div#img_container a{
+    text-align:center;
+    margin:  auto;
+    height: 90px;
+    width: 100%;
+}
+
+div#img_container img{
+    text-align:center;
+    margin:  auto;
+    height: 90px;
+    width: 350px;
+}
+
+div#header a{
+    display: inline-block;
+}
+
+div#header img{
+
+}
+
+div#menu {
+    position: absolute;
+    top: 150px; /**/
+    left: 0px;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    border-spacing: 40px 0px;
+    background: white;
+    font-size: 8px;
+    text-align: center;
+
+}
+/* MENU */
+#menu,#menu ul,#menu ul li,#menu ul li a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    /*position: absolute;*/
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#menu {
+    border-bottom: 1px solid #333333;
+    padding: 0 5px;
+    width: auto;
+    font-family: 'Roboto Slab', serif;
+    background: white;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#menu:after,#menu ul:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+#menu ul li {
+    display: inline-block;
+    width:10%;
+}
+#menu.align-right ul li {
+    float: right;
+}
+#menu.align-center ul {
+    text-align: center;
+}
+#menu ul li a {
+    font-size: 14px;
+    padding: 15px;
+    text-decoration: none;
+    color: #333333;
+}
+#menu ul li:hover ,
+/*#menu ul li a:hover,*/
+#menu ul li.active {
+    background: burlywood;
+}
+@media all and (max-width: 640px) {
+#menu {
+    padding: 0;
+    border-radius: 0;
+    border: 0;
+}
+#menu ul li,
+#menu.align-center,
+#menu.align-right {
+    display: block;
+}
+}
+/* pulldown menu */
+div#menu li  ul {
+    display:none;
+    position:absolute;
+    margin: 0;
+    padding:10px 10px 5px 10px;
+    list-style:none;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: white;
+    z-index: 1;
+}
+
+div#menu li:hover ul {
+    display:block;
+}
+        div#content{ /**/
+            position: absolute;
+            text-align:center;
+            display:inline-block;
+            width:100%;
+            top:300px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="header">
+        {% if user.is_active %}
+        <h4 id="welcome">반갑습니다.
+                    <strong>{% firstof user.get_short_name user.get_username %}</strong> /
+                    <a href="{% url 'password_change' %}">비밀번호 변경</a> /
+                    <a href="{% url 'logout' %}">로그아웃</a>
+        </h4>
+        {% else %}
+        <h4 id="welcome">반갑습니다, 익명 /
+                    <a href="{% url 'login' %}">로그인</a>
+                    <a href="{% url 'register' %}">등록</a>
+        </h4>
+        {% endif %}
+        <!--로고 이미지랑 텍스트 간격 좁혀야 함-->
+       <div id="img_container">
+           <a href="{% url 'home' %}"><img src="{% static 'img/logo.PNG' %}"/></a> <!--로고+텍스트 캡처떠서 넣음-->
+       </div>
+
+        <div id="menu">
+            <ul ><!--메뉴 영역-->
+                <li ><a href="{% url 'blog:index' %}">BRAND</a></li>
+                <li><a href="{% url 'notice:index' %}">NOTICE</a></li>
+                <li><a href="{% url 'qna:index' %}">Q&A</a></li>
+                <li><a href="{% url 'review:index' %}">REVIEW</a></li>
+                <li><a href="#">SHOP</a></li>
+
+                <li><a href="{% url 'admin:index' %}">ADMIN</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="content">
+{#        <h1>블로그 목록 (표 형식)</h1>#}
+        <p style="text-align: center;"> TEMPUS CANDLE은 </p>
+        <p style="text-align: center;">
+                <strong>
+                    1. 녹는 양초를 보며 버려지는 촛농을 재사용 할 수는 없을까?  <br/>
+                    2. 여러 소중한 시간을 더욱 값지게 추억을 할 방법이 없을까? <br/>
+                </strong>
+        </p>
+        <p style="text-align: center;">
+                이 두가지 생각으로 부터 시작이 되었습니다. <br/> <br/> <br/>
+
+                캔들은 크게 두가지 종류로 나뉩니다. <br/>
+                세워서 사용하는 필라캔들 <br/>
+                용기에 담아서 사용하는 컨테이너캔들 <br/>
+                하지만 저희 TEMPUS CANDLE은 두가지 특성을 <br/>
+                한번에 다 사용해보실 수 있습니다! <br/> <br/> <br/>
+                현재의 저장매체로는 시각으로 담는 사진 <br/>
+                청각으로 듣는 녹음 등이 있다고 생각합니다. <br/>
+                사람들은 이러한 저장매체들로 여러 시간을 추억합니다. <br/> <br/> <br/>
+
+                하지만 <br/>
+                TEMPUS CANDLE은  <br/>
+                눈으로 보는 시각, 심지가 타는 소리 청각 <br/>
+                은은하게 퍼지는 향기 후각, 만질 수 있는 촉각 <br/>
+                이렇게 총4가지 감각을 다 사용하는 저장매체라고 생각합니다. <br/>
+                연인들은 항상 색다른, 특별한, 아이템으로 추억을 공유하고 싶어합니다. <br/>
+                그런 특별한 시간, 소중한 기념일 들을 4가지 감각을 모두 이용하여 <br/>
+                TEMPUS CANDLE이 정말 잊을 수 없는 추억으로 담아드립니다! <br/>
+        </p>
+
+        <table id="tbl" >
+            <tr>
+{#                <th>번호</th>#}
+{#                <th>최종 수정일</th>#}
+                <th style="text-align: center">템푸스캔들만의 특별한 차별성</th>
+{#                <th>슬러그</th>#}
+{#                <th>요약</th>#}
+            </tr>
+            {% for post in posts %}
+            <tr>
+{#                <td>{{ post.id }}</td>#}
+{#                <td>{{ post.modify_date }}</td>#}
+                <td><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></td>
+{#                <td>{{ post.slug }}</td>#}
+{#                <td><p>{{ post.description }}</p></td>#}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <br/>
+
+    <!--이전/현재/다음 페이지 이동 -->
+    <div class="centered"> <!--div 요소는 블록 요소-->
+        <span>  <!--span 요소는 인라인 요소-->
+            <!--page_obj는 장고 Page 객체가 들어있는 컨텍스트 변수이며
+            has_previous, has_next, previous_page_number, next_page_number,
+            number, pagenator.num_pages 속성을 가짐-->
+            {% if page_obj.has_previous %}
+                <!--링크 형식 ?page=1에 주목-->
+                <a href="?page={{ page_obj.previous_page_number }}">이전 페이지</a>
+            {% endif %}
+
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+                <!--링크 형식 ?page=3에 주목-->
+                <a href="?page={{ page_obj.next_page_number }}">다음 페이지</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>

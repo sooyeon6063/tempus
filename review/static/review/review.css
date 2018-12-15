@@ -1,0 +1,54 @@
+/* album_list.html */
+div.product-list {
+    margin: 20px 50px;
+}
+
+div.product-list-review {
+    float: left;
+    width: 150px;
+    height: 180px;
+}
+
+/* album_detail.html */
+div.product-detail {
+    margin: 30px 10px;
+}
+
+div.product-detail-review {
+    float: left;
+    width: 220px;
+    height: 220px;
+}
+
+div.product-detail-review > li {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* photo_detail.html */
+table.review-detail {
+    margin: 30px 50px 0 50px;
+    border: 1px solid #ccc;
+}
+
+table.review-detail td {
+    width: 50%;
+}
+
+table.review-detail ul li {
+    font-weight: bold;
+}
+
+table.review-detail ul p {
+    font-style: italic;
+}
+
+/* common */
+img.thumbnail {
+    border:3px solid #ccc;
+}
+
+div.clear_float {
+    clear: both;
+}

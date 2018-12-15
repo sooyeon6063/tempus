@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!--글씨체(Roboto Slab)사용을 위한 임포트-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+    {#  템플릿에 이미지를 넣기 위함  #}
+    {% load staticfiles %}
+    <!--정적 파일인 css 연결하기 위하여, staticfiles를 로드-->
+    <!--스타일시트 css/base.css 작성이 필요함-->
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/notice.css" %}{% endblock %}" />
+    <meta charset="UTF-8">
+    <title>템푸스캔들 공지사항</title>
+</head>
+<div id="header">
+        {% if user.is_active %}
+        <h4 id="welcome">반갑습니다.
+                    <strong>{% firstof user.get_short_name user.get_username %}</strong> /
+                    <a href="{% url 'password_change' %}">비밀번호 변경</a> /
+                    <a href="{% url 'logout' %}">로그아웃</a>
+        </h4>
+        {% else %}
+        <h4 id="welcome">반갑습니다, 익명 /
+                    <a href="{% url 'login' %}">로그인</a>
+                    <a href="{% url 'register' %}">등록</a>
+        </h4>
+        {% endif %}
+        <!--로고 이미지랑 텍스트 간격 좁혀야 함-->
+       <div id="img_container">
+           <a href="{% url 'home' %}"><img src="{% static 'img/logo.PNG' %}"/></a> <!--로고+텍스트 캡처떠서 넣음-->
+       </div>
+
+        <div id="menu">
+            <ul ><!--메뉴 영역-->
+                <li ><a href="{% url 'blog:index' %}">BRAND</a></li>
+                <li><a href="{% url 'notice:index' %}">NOTICE</a></li>
+                <li><a href="{% url 'qna:index' %}">Q&A</a></li>
+                <li><a href="{% url 'review:index' %}">REVIEW</a></li>
+                <li><a href="{% url 'photo:index' %}">SHOP</a></li>
+                <li><a href="{% url 'admin:index' %}">ADMIN</a></li>
+            </ul>
+        </div>
+    </div><!--특별한 HTML 태그 지정이 없으면 장고가 <body> </body> 영역으로 간주함-->
+<!--아래에서 object 객체는 PostDV 클래스 형 뷰에서
+컨텍스트 변수로 넘겨주는 Post 클래스의 특정 객체-->
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<!--object.title을 H2 요소로 출력 -->
+<a href="{% url 'notice:index' %}" style="float:left; margin-right:50px;"><p style="font-size:large;border:solid gray 1px; ">공지사항 목록 보기</p></a>
+<br/><br/>
+<h2>{{ object.title }}</h2>
+
+
+<!--object.modify_date를 파이프(|)를 통하여 date:"j F Y" 형식으로 출력-->
+<p class="date">{{ object.modify_date|date:"j F Y" }}</p>
+<br/>
+
+<div class="body">
+    <!--object.content를 파이프(|)를 통하여 linebreaks 탬플릿 필터로 처리하여
+     개행문자'\n'를 인식하도록 조치함-->
+    {{ object.content|linebreaks }}
+</div>
+<p class="other_posts">
+    <!--object.get_previous_by_modify_date 함수는 modify_date 기준으로 이전 객체를 반환-->
+    {% if object.get_previous_by_modify_date %}
+        <!--blog.Post.get_previous_post 함수는 이전 객체를 반환 -->
+        <!--get_absolute_url 함수는 /blog/post/slug단어 형태의 URL 패턴을 반환-->
+        <!--'&laquo;'는 HTML 특수 문자 '<<'를 의미함-->
+        <a href="{{ object.get_previous_post.get_absolute_url }}" title="View previous post">
+            &laquo;-- {{ object.get_previous_post }}
+        </a>
+    {% endif %}
+
+    {% if object.get_next_by_modify_date %}
+        &nbsp; |
+        <!--blog.Post.get_next_post 함수는 다음 객체를 반환 -->
+        <!--get_absolute_url 함수는 /blog/post/slug단어 형태의 URL 패턴을 반환-->
+        <!--'&raquo;'는 HTML 특수 문자 '>>'를 의미함-->
+        <a href="{{ object.get_next_post.get_absolute_url }}" title="View next post">
+            {{ object.get_next_post }} --&raquo;
+        </a>
+    {% endif %}
+</p>
+
